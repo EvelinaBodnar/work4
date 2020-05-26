@@ -1,16 +1,16 @@
 CREATE OR REPLACE PACKAGE my_package IS
-    TYPE rowprojects IS RECORD (
+    TYPE rows IS RECORD (
         bar_name  chocolate.bar_name%TYPE,
         company   chocolate.company%TYPE,
         bean_type chocolate.bean_type%TYPE
     );
-    TYPE tblprojects IS
-        TABLE OF rowprojects;
+    TYPE tbl IS
+        TABLE OF rows;
 --
     FUNCTION choosebeans (
         company_name   VARCHAR,
         percent      FLOAT
-    ) RETURN tblprojects
+    ) RETURN tbl
         PIPELINED;
 
     PROCEDURE add_info (
@@ -73,7 +73,7 @@ END;
 
 FUNCTION choosebeans (company_name   VARCHAR,
         percent      FLOAT
-    ) RETURN tblprojects
+    ) RETURN tbl
         PIPELINED
     IS
 
@@ -87,7 +87,7 @@ FUNCTION choosebeans (company_name   VARCHAR,
         WHERE
             company = company_name
             AND cocoa_perc <= percent );
-    my_rec rowprojects;
+    my_rec rows;
     BEGIN
         FOR rec IN cur 
         LOOP

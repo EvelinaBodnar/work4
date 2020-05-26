@@ -1,15 +1,15 @@
-CREATE TYPE rowprojects IS OBJECT (
+CREATE TYPE rowps IS OBJECT (
         bar_name  VARCHAR(100),
         company   VARCHAR(100),
         bean_type VARCHAR(100)
     );
 /
-CREATE TYPE tblprojects IS
-        TABLE OF rowprojects;
+CREATE TYPE tbl IS
+        TABLE OF rows;
 /
 CREATE OR REPLACE FUNCTION choosebeans (company_name   VARCHAR,
         percent      FLOAT
-    ) RETURN tblprojects
+    ) RETURN tbl
         PIPELINED
     IS
 
@@ -23,7 +23,7 @@ CREATE OR REPLACE FUNCTION choosebeans (company_name   VARCHAR,
         WHERE
             company = company_name
             AND cocoa_perc <= percent );
-    my_rec rowprojects;
+    my_rec rows;
     BEGIN
         FOR rec IN cur 
         LOOP
